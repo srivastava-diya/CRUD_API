@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/userModel");
+require('dotenv').config();
+const dbURI = process.env.DATABASE_URI;
+
 const app = express();
 
 app.use(express.json())
@@ -69,7 +72,7 @@ app.delete("/users/:id", async(req, res) =>{
 
 
 mongoose
-.connect("mongodb+srv://diyasrivastava2023:Kfk8mGlRDVpjmoM7@crudapi.lfwgi.mongodb.net/NODE-API?retryWrites=true&w=majority&appName=CrudAPI")
+.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
 .then(()=>{
     console.log("connected to MongoDB")
     app.listen(3000, ()=>{
@@ -77,5 +80,5 @@ mongoose
     });
 })
 .catch(()=>{
-    console.log(error)
+    console.log(error);
 })
